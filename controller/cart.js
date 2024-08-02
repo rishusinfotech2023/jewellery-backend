@@ -1,43 +1,55 @@
+const Cart = require('../module/Cart');
 const jwt = require('../controller/jwt')
-const Cart = require('../module/Cart')
 
+exports.getCart = async (req, res) => {
+  try {
+    const items = await Cart.find();
+    res.json({ items });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch cart items' });
+  }
+};
 
-module.exports =  async (req,res)=>{
+exports.addToCart = async (req, res) => {
+  const { product_id, price, name, gross_weight,upload } = req.body;
 
-    try {        
-    const cartObj = new Cart({
-        product_id : req.body.product_id,
-        price : req.body.price,
-        user_id : req.body.user_id, 
-        store_id : req.cody.store_id,
-    }) 
-    const cartData = await cartObj.save();
+  const newItem = new Cart({ name,price,product_id,gross_weight,upload });
 
-    return res.status(200).json({message : "Data is save in the Cart", success : true , data : cartData})
+  try {
+    await newItem.save();
+    res.status(200).json({ message: 'Item added to cart', item: newItem });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to add item to cart' });
+  }
+};
 
+exports.DeleteCart = async (req,res) =>{
+    
+      try {
+        const {id} = req.params ;
+        if(!id){
+          return res.status(400).json({message : "Id parameter is required"})
+        }
+        const product = await Cart.findById(id)
+        if(!product)
+        return res.status(404).json({ message : "Product not found"})
 
-    } catch (error) {
-        res.status(500).json({ message : error.message})
-    }
+        await Cart.deleteOne({ _id : id})
+        return res.status(200).json({message : "Product Delete Successfuly"})
+      } catch (error) {
+        return res.status(500).json({message : "Failed to Delete form Database"})
+      }
+    
 }
 
-module.exports = async (req,res)=>{
 
-    try {
-        const cartFetch = new Cart({
-            name : req.body.name,
-            price : req.body.name,
-            gross_weight : req.body.gross_weight
 
-        })
-        const cartFetchData = await cartFetch.save()
 
-        return res.send(200).json({message : "Fetch data is successfuly", success : true, data : cartFetchData}  )
-        
-    } catch (error) {
-        return res.send(500).json({ message : error.message})
-    }
-}
+
+
+
+
+
 
 
 

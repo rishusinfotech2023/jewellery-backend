@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const addToCart = new mongoose.Schema({
+const addToWishList = new mongoose.Schema({
     name : {
         type : String,
         require : true
@@ -17,7 +17,11 @@ const addToCart = new mongoose.Schema({
         type : String,
         require : true
     },
-   upload: [
+    discount : { 
+        type : String,
+        require : true
+    },
+    upload: [
         {
             client_id: {
                 type: String,
@@ -29,13 +33,7 @@ const addToCart = new mongoose.Schema({
             }
         }
     ]
-   
-   
+})
 
-});
-
-module.exports = mongoose.model("cart", addToCart)
-
-
-
+module.exports = mongoose.model("wishlist", addToWishList)
 

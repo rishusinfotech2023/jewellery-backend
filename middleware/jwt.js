@@ -11,11 +11,9 @@ module.exports = (req, res, next) => {
     if (!token) {
         return res.status(401).json({ message: 'No token provided' });
     }
-    
     // Extract token without the "Bearer" prefix
     const tokenValue = token.split(' ')[1];
   
-    
        // Verify token
        jwt.verify(tokenValue, secretKey, (err, decoded) => {
         if (err) {

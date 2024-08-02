@@ -7,7 +7,8 @@ let User = new Schema({
     },
     password:{
         type:String
-    }
+    },
+    wishList : [{type : mongoose.Schema.Types.ObjectId , ref : "Product"}],
 },{
     collection:"user"
 });

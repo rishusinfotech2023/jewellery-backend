@@ -16,17 +16,19 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(cors()); 
 
-
 const admin=require('./view/login')
 const user = require('./view/User.js')
 const jewellery=require('./view/jewller');
 const payment=require('./view/payment');
 const cart = require('./view/Cart');
+const wishlist = require('./view/wishlist.js')
+
 app.use('/admin',admin);
 app.use('/user', user)
 app.use('/jewellery',jewellery);
 app.use('/payment',payment);
 app.use('/cart', cart)
+app.use('/wishlist', wishlist)
 
 cloudinary.config({ 
     cloud_name: process.env.CLOUD_NAME, 
