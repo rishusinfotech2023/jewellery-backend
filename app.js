@@ -8,7 +8,7 @@ const cloudinary=require('cloudinary').v2;
 const jwt = require('./controller/jwt.js')
 
 dotenv.config();
-const port=process.env.PORT||7000
+const port = process.env.PORT || 4000
 
 const app=express();
 app.use('/uploads', express.static('uploads'));
