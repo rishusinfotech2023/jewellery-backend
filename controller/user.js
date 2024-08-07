@@ -2,8 +2,9 @@ const USER=require('../module/user')
 const bcrypt=require('bcrypt');
 const jwt=require('../controller/jwt');
 
-exports.signup=async(req,res)=>{
-    const {email,password}=req.body;
+
+exports.signup = async(req,res)=>{
+    const {email,password} = req.body;
     try{
         const existingUser = await USER.findOne({ email })
         if (existingUser) {

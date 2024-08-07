@@ -188,7 +188,7 @@
 const cloudinary = require("cloudinary").v2;
 const Jewellery = require("../module/jewllery");
 const upload = require("../middleware/upload");
-// const User = require("../controller/user");
+const User = require("../controller/user");
 const jwt = require('../middleware/jwt')
 
 exports.jewellery = async (req, res) => {
@@ -214,19 +214,19 @@ exports.jewellery = async (req, res) => {
         net_weight,
       } = req.body;
 
-      // if (
-      //   !name ||
-      //   !price ||
-      //   !description ||
-      //   !discount ||
-      //   !material ||
-      //   !category ||
-      //   !gender ||
-      //   !gross_weight ||
-      //   !net_weight
-      // ) {
-      //   return res.status(400).json({ message: "All fields are required" });
-      // }
+      if (
+        !name ||
+        !price ||
+        !description ||
+        !discount ||
+        !material ||
+        !category ||
+        !gender ||
+        !gross_weight ||
+        !net_weight
+      ) {
+        return res.status(400).json({ message: "All fields are required" });
+      }
 
       const uploadedFiles = [];
 
@@ -242,7 +242,7 @@ exports.jewellery = async (req, res) => {
         } catch (err) {
           // console.log("Error uploading file to Cloudinary:", uploadError);
           // return res.status(500).json({ success: false, message: "An error occurred while uploading to Cloudinary" });
-          // return res.status(500).json({ message : err.message})
+          return res.status(500).json({ message : err.message})
         }
       }
 
@@ -277,9 +277,6 @@ exports.jewellery = async (req, res) => {
     }
   });
 };
-
-
-
 
 
 exports.getJewellery = async (req, res) => {
@@ -376,6 +373,7 @@ exports.getFindJewellery = async (req, res) => {
         criteria.toLowerCase()
       )
     ) {
+
       filteredJewellery = allJewellery.filter(
         (p) => p.gender && p.gender.toLowerCase() === criteria.toLowerCase()
       );

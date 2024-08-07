@@ -27,6 +27,26 @@ exports.addToWishlist = async (req,res) =>{
 
 }
 
+exports.deleteWishlist = async (req, res) =>{
+
+    try {
+        const {id }= req.params ;
+        if(!id){
+        return res.status(400).json({ message : "Wishlist id parameter is required"})
+    }
+    const product = await WishList.findById(id)
+    console.log(product)
+    if(!product){
+        return res.status(404).json({ message : "Wishlist product not found"})  }
+        await WishList.deleteOne( { _id : id })
+        return res.status(200).json({ message : "Wishlist delete successfuly"})
+  
+        
+    } catch (error) {
+        return res.status(500).json({message : "wishlist delete form to database"})
+    }
+
+}
 
 
 

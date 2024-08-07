@@ -8,4 +8,6 @@ Router.post('/adminsignup',admin.admin);
 Router.post('/adminlogin',admin.adminlogin);
 
 
-module.exports=Router;
+module.exports = Router;
+
+

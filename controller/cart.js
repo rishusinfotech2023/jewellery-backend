@@ -1,5 +1,8 @@
 const Cart = require('../module/Cart');
-const jwt = require('../controller/jwt')
+const jwt = require('../controller/jwt');
+const multer = require('multer');
+
+
 
 exports.getCart = async (req, res) => {
   try {
@@ -13,7 +16,7 @@ exports.getCart = async (req, res) => {
 exports.addToCart = async (req, res) => {
   const { product_id, price, name, gross_weight,upload } = req.body;
 
-  const newItem = new Cart({ name,price,product_id,gross_weight,upload });
+  const newItem = new Cart({ name,price,product_id,gross_weight,upload  }); //: req.file.filename
 
   try {
     await newItem.save();
@@ -28,16 +31,16 @@ exports.DeleteCart = async (req,res) =>{
       try {
         const {id} = req.params ;
         if(!id){
-          return res.status(400).json({message : "Id parameter is required"})
+          return res.status(400).json({message : "Cart Id parameter is required"})
         }
         const product = await Cart.findById(id)
         if(!product)
-        return res.status(404).json({ message : "Product not found"})
+        return res.status(404).json({ message : "Cart Product not found"})
 
         await Cart.deleteOne({ _id : id})
         return res.status(200).json({message : "Product Delete Successfuly"})
       } catch (error) {
-        return res.status(500).json({message : "Failed to Delete form Database"})
+        return res.status(500).json({message : "Cart Failed to Delete form Database"})
       }
     
 }

@@ -31,7 +31,6 @@ const addToCart = new mongoose.Schema({
     ]
    
    
-
 });
 
 module.exports = mongoose.model("cart", addToCart)

@@ -13,7 +13,7 @@ Router.get('/search',jewllery.search)
 Router.put('/update/:id',middleware,jewllery.updateJewellery);
 Router.get('/:criteria?',jewllery.getFindJewellery);
 
-module.exports=Router;
+module.exports = Router;
 
 
 
